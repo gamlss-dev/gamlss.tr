@@ -24,10 +24,10 @@ This is the same for right truncation. Truncation at 15 for a discrete variable 
 }
 
 \author{
-Mikis Stasinopoulos <\email{d.stasinopoulos@londonmet.ac.uk}> and 
-Bob Rigby <\email{r.rigby@londonmet.ac.uk}> 
+Mikis Stasinopoulos <\email{mikis.stasinopoulos@gamlss.org}> and 
+Bob Rigby 
 
-Maintainer: Mikis Stasinopoulos <d.stasinopoulos@londonmet.ac.uk>
+Maintainer: Mikis Stasinopoulos <mikis.stasinopoulos@gamlss.org>
 
 }
 \references{

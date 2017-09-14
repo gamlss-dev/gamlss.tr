@@ -39,7 +39,7 @@ gen.trun(par = c(0), family = "NO", name = "tr",
 
 Stasinopoulos D. M., Rigby R.A. and Akantziliotou C. (2003) Instructions on how to use the GAMLSS package in R.
 Accompanying documentation in the current GAMLSS  help files, (see also  \url{http://www.gamlss.org/}).}
-\author{Mikis Stasinopoulos \email{d.stasinopoulos@londonmet.ac.uk} and Bob Rigby \email{r.rigby@londonmet.ac.uk}}
+\author{Mikis Stasinopoulos \email{mikis.stasinopoulos@gamlss.org} and Bob Rigby}
 
 \seealso{ \code{\link{trun.d}}, \code{\link{trun.p}}, \code{\link{trun.q}}, \code{\link{trun.r}} }
 \examples{
@@ -61,8 +61,6 @@ gen.trun(par=cbind(leftPAR,rep(100, 100)),family="TF", name="0to100Varying",
 YY<- rTF0to100Varying(100, mu=80, sigma=20, nu=5)
 m1<-gamlss(YY~1, family=TF0to100Varying)
 m1
-# generating with different link
-gen.trun(0, NO(mu.link=log))
 }
 \keyword{distribution}
 \keyword{regression}

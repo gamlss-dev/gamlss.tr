@@ -34,7 +34,7 @@ Returns a r family function
 
 Stasinopoulos D. M., Rigby R.A. and Akantziliotou C. (2003) Instructions on how to use the GAMLSS package in R.
 Accompanying documentation in the current GAMLSS  help files, (see also  \url{http://www.gamlss.org/}). }
-\author{ Mikis Stasinopoulos \email{d.stasinopoulos@londonmet.ac.uk} and Bob Rigby \email{r.rigby@londonmet.ac.uk}  }
+\author{ Mikis Stasinopoulos \email{mikis.stasinopoulos@gamlss.org} and Bob Rigby}
 
 \seealso{ \code{\link{trun.p}}, \code{\link{trun.q}}, \code{\link{trun.d}}, \code{\link{gen.trun}} }
 \examples{

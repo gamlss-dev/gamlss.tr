@@ -35,5 +35,6 @@ gen.trun <-function(par = c(0),
    eval(call("<-",as.name(fun),dummy), envir=parent.frame(n = 1))
   cat("A truncated family of distributions from",  fname, "has been generated \n", 
   "and saved under the names: ", "\n",paste(alldislist,sep=","),"\n")#
-  cat("The type of truncation is", type, "and the truncation parameter is", par, " \n") 
+  cat("The type of truncation is", type, "\n",
+      "and the truncation parameter is", par, " \n") 
  }

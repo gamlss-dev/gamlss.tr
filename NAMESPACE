@@ -3,8 +3,12 @@
 
 export(gen.trun, trun.d, trun.p,trun.q,trun.r, trun, fitTail, fitTailAll)
 
-
-
+importFrom(gamlss, gamlss, gamlssML)
+importFrom(gamlss.dist, as.gamlss.family, dPO)
+importFrom("graphics", "hist")
+importFrom("stats", "fitted", "optim", "runif", "ts")
+importFrom("utils", "head", "tail")
+importFrom("methods", "is")
 
 # datasets #export(lange)
 

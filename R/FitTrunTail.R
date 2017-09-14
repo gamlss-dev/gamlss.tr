@@ -19,12 +19,13 @@ fitTail <- function(y,
     Y
   }
   #require(gamlss.tr)
-  FAM <- as.gamlss.family(family)
-  type <- match.arg(type)
+       FAM <- as.gamlss.family(family)
+      type <- match.arg(type)
   typetrun <- if(type=="right") "left" else "right" 
-  famName <- FAM$family[1]
-  Y <- tailFun(y, percentage=percentage, howmany=howmany, type=type )
-  mY <- y[order(y)][(length(y)-length(Y))]
+   famName <- FAM$family[1]
+         Y <- tailFun(y, percentage=percentage, howmany=howmany, type=type )
+        mY <- y[order(y)][(length(y)-length(Y))]
+        # I thnk the problem is on gamlssML
   m1 <- gamlssML(Y, family=trun(par=c(mY-0.001), family=famName,  type=typetrun),...)
   if (any(class(m1)%in%"try-error"))
     m1 <- try(gamlss(Y~1, family=trun(par=c(mY-0.001), family=famName,  type=typetrun), ...))

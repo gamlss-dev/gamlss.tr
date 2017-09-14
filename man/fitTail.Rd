@@ -64,19 +64,19 @@ Bob Rigby, Mikis Stasinopoulos and Vlassios Voudouris
 }
 \examples{
 data(film90)
-F90 <- film90$borev0
+F90 <- exp(film90$lborev1)# original scale
 # trucated plots
 # 10%
 w403<- fitTail(F90, family=WEI3)
-plot(w403)
 qqnorm(resid(w403))
 abline(0,1, col="red")
 
+\dontrun{
 # hill -sequential plot 10% weibull
 w1<-fitTailAll(F90)
 # plot sigma
 plot(w1[,2])
-\dontrun{
+#-----------------
 #LOGNO
 l403<- fitTail(F90, family=LOGNO)
 plot(l403)
