@@ -2,40 +2,32 @@
 \alias{gamlss.tr-package}
 \alias{gamlss.tr}
 \docType{package}
-\title{The GAMLSS Add On Package for Truncated Distributions}
+
+\title{
+\packageTitle{gamlss.tr}
+}
 \description{
-The main purpose of this package is to allow the user of the GAMLSS models to fit truncated distributions.
+\packageDescription{gamlss.tr}
 }
+
 \details{
-\tabular{ll}{
-Package: \tab gamlss.tr\cr
-Type: \tab Package\cr
-Version: \tab 1.0\cr
-Date: \tab 2005-11-21\cr
-License: \tab GPL (version 2 or later) \cr
-}
-The user can take any \code{gamlss.family} and create a truncated version of it. Left, 
-right and both sides truncation is allowed. 
-For continuous distributions left truncation at 3 means that the random variable can take the value 3.
-For discrete distributions left truncation at 3 means that the random variable can take values from 4 onwards.
-This is the same for right truncation. Truncation at 15 for a discrete variable means that 
-15 and greater values are not allowed but for continuous variable it mean values greater that 15 are not allowed 
-(so 15 is a possible value).    
+The DESCRIPTION file:
+\packageDESCRIPTION{gamlss.tr}
+\packageIndices{gamlss.tr}
 }
 
 \author{
-Mikis Stasinopoulos <\email{mikis.stasinopoulos@gamlss.org}> and 
-Bob Rigby 
+\packageAuthor{gamlss.tr}
 
-Maintainer: Mikis Stasinopoulos <mikis.stasinopoulos@gamlss.org>
-
+Maintainer: \packageMaintainer{gamlss.tr}
 }
 \references{
 Rigby, R. A. and  Stasinopoulos D. M. (2005). Generalized additive models for location, scale and shape,(with discussion), 
 \emph{Appl. Statist.}, \bold{54}, part 3, pp 507-554.
 
-Stasinopoulos D. M., Rigby R.A. and Akantziliotou C. (2003) Instructions on how to use the GAMLSS package in R.
-Accompanying documentation in the current GAMLSS  help files, (see also  \url{http://www.gamlss.org/}).
+Stasinopoulos D. M., Rigby R.A., Heller G., Voudouris V., and De Bastiani F., (2017) \emph{Flexible Regression and Smoothing: Using GAMLSS in R}, Chapman and Hall/CRC. 
+
+(see also  \url{http://www.gamlss.org/}).
 }
 \keyword{ package }
 \keyword{ distribution }

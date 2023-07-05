@@ -33,7 +33,7 @@ trun.p(par, family = "NO", type = c("left", "right", "both"),
 \emph{Appl. Statist.}, \bold{54}, part 3, pp 507-554.
 
 Stasinopoulos D. M., Rigby R.A. and Akantziliotou C. (2003) Instructions on how to use the GAMLSS package in R.
-Accompanying documentation in the current GAMLSS  help files, (see also  \url{http://www.gamlss.org/}). }
+Accompanying documentation in the current GAMLSS  help files, (see also  \url{https://www.gamlss.com/}). }
 \author{  Mikis Stasinopoulos \email{mikis.stasinopoulos@gamlss.org} and Bob Rigby}
 
 

@@ -11,9 +11,10 @@ There are two functions here. The function \code{fitTail()} which fits a truncat
 \usage{
 fitTail(y, family = "WEI3", percentage = 10, howmany = NULL, 
       type = c("right", "left"), ...)
+   
 fitTailAll(y, family = "WEI3", percentage = 10, howmany = NULL, 
       type = c("right", "left"), plot = TRUE, 
-      print = TRUE, save = FALSE, start = 5)
+      print = TRUE, save = FALSE, start = 5, trace = 0,  ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -27,13 +28,14 @@ fitTailAll(y, family = "WEI3", percentage = 10, howmany = NULL,
   \item{print}{whether to print the coefficients with default equal \code{TRUE}}
   \item{save}{whether to save the fitted linear model with default equal \code{FALSE}}
    \item{start}{where to start fitting from the tail of the data}
+   \item{trace}{0: no output 1: minimal 2: print estimates}
   \item{\dots}{
 for further argument to the fitting function
 }
 }
 \details{
 The idea here is to fit a truncated distribution to the tail of the data.
-Truncated log-normal and Weibull distributions could be appropriate distributions. More details can be found in Chapter 6 of  "The Distribution Toolbox of GAMLSS" book  which can be found in   \url{http://www.gamlss.org/}).
+Truncated log-normal and Weibull distributions could be appropriate distributions. More details can be found in Chapter 6 of  "The Distribution Toolbox of GAMLSS" book  which can be found in   \url{https://www.gamlss.com/}).
 }
 \value{
 A fitted gamlss model
@@ -48,7 +50,7 @@ Rigby, R. A. and  Stasinopoulos D. M. (2005). Generalized additive models for lo
 
 
 Stasinopoulos D. M., Rigby R.A. and Akantziliotou C. (2006) Instructions on how to use the GAMLSS package in R.
-Accompanying documentation in the current GAMLSS  help files, (see also  \url{http://www.gamlss.org/}).
+Accompanying documentation in the current GAMLSS  help files, (see also  \url{https://www.gamlss.com/}).
 
 Stasinopoulos D. M. Rigby R.A. (2007) Generalized additive models for location scale and shape (GAMLSS) in R.
 \emph{Journal of Statistical Software}, Vol. \bold{23}, Issue 7, Dec 2007, \url{http://www.jstatsoft.org/v23/i07}.

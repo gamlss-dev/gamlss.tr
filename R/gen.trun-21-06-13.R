@@ -3,6 +3,7 @@ gen.trun <-function(par = c(0),
                      name = "tr", 
                      type = c("left", "right", "both"),
                   varying = FALSE,
+                    print = TRUE,
                      ...)
  {
   type <- match.arg(type)
@@ -33,8 +34,11 @@ gen.trun <-function(par = c(0),
    # generate the fitting distribution
    eval(dummy <- trun(par, family = substitute(family), type = type, name=name, local=FALSE, varying = varying, ...))
    eval(call("<-",as.name(fun),dummy), envir=parent.frame(n = 1))
-  cat("A truncated family of distributions from",  fname, "has been generated \n", 
-  "and saved under the names: ", "\n",paste(alldislist,sep=","),"\n")#
-  cat("The type of truncation is", type, "\n",
-      "and the truncation parameter is", par, " \n") 
+if (print)
+{
+   cat("A truncated family of distributions from",  fname, "has been generated \n", 
+       "and saved under the names: ", "\n",paste(alldislist,sep=","),"\n")#
+   cat("The type of truncation is", type, "\n",
+       "and the truncation parameter is", par, " \n") 
+}  
  }
