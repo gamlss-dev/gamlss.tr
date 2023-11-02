@@ -1,16 +1,15 @@
 Package: gamlss.tr
-Type: Package
-Title: Generating and Fitting Truncated `gamlss.family' Distributions
+Title: Generating and Fitting Truncated 'gamlss.family' Distributions
 Version: 5.1-8
-Date: 2021-04-27
-Author: Mikis Stasinopoulos <d.stasinopoulos@londonmet.ac.uk>, Bob
-        Rigby <r.rigby@londonmet.ac.uk>
-Maintainer: Mikis Stasinopoulos <d.stasinopoulos@londonmet.ac.uk>
-LazyLoad: yes
-Depends: R (>= 2.2.1), gamlss.dist,  gamlss (>= 5.0-0), methods
-Description: This is an add on package to GAMLSS. The purpose of this
-        package is to allow users to defined truncated distributions in
-        GAMLSS models. The main function gen.trun() generates truncated
-        version of an existing GAMLSS family distribution.
+Date: 2023-11-02
+Authors@R: c(person("Mikis", "Stasinopoulos", role = c("aut", "cre"), 
+             email = "d.stasinopoulos@gre.ac.uk", comment = c(ORCID = "0000-0003-2407-5704")),
+           person("Robert", "Rigby", role = "aut", email = "r.rigby@gre.ac.uk", comment = c(ORCID = "0000-0003-3853-1707"))
+           )
+Description: This is an add-on package to 'gamlss' which supports truncated distributions in Generalized Additive Models for Location Scale and Shape.
+        The main function gen.trun() generates truncated version of an existing gamlss family distribution.
 License: GPL-2 | GPL-3
 URL: http://www.gamlss.org/
+BugReports: https://github.com/gamlss-dev/gamlss.tr/issues
+Depends: R (>= 2.2.1), gamlss.dist,  gamlss (>= 5.0-0), methods
+LazyLoad: yes
