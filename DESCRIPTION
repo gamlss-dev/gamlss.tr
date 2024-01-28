@@ -1,11 +1,11 @@
 Package: gamlss.tr
 Type: Package
 Title: Generating and Fitting Truncated `gamlss.family' Distributions
-Version: 5.1-8
-Date: 2021-04-27
-Author: Mikis Stasinopoulos <d.stasinopoulos@londonmet.ac.uk>, Bob
-        Rigby <r.rigby@londonmet.ac.uk>
-Maintainer: Mikis Stasinopoulos <d.stasinopoulos@londonmet.ac.uk>
+Version: 5.1-9
+Date: 2024-01-28
+Author: Mikis Stasinopoulos <d.stasinopoulos@gre.ac.uk>, Bob
+        Rigby <r.rigby@gre.ac.uk>
+Maintainer: Mikis Stasinopoulos <d.stasinopoulos@gre.ac.uk>
 LazyLoad: yes
 Depends: R (>= 2.2.1), gamlss.dist,  gamlss (>= 5.0-0), methods
 Description: This is an add on package to GAMLSS. The purpose of this
@@ -13,4 +13,4 @@ Description: This is an add on package to GAMLSS. The purpose of this
         GAMLSS models. The main function gen.trun() generates truncated
         version of an existing GAMLSS family distribution.
 License: GPL-2 | GPL-3
-URL: http://www.gamlss.org/
+URL: https://www.gamlss.com/
