@@ -7,7 +7,7 @@ Authors@R: c(person("Mikis", "Stasinopoulos", role = c("aut", "cre"),
            person("Robert", "Rigby", role = "aut", email = "r.rigby@gre.ac.uk", comment = c(ORCID = "0000-0003-3853-1707"))
            )
 Description: This is an add-on package to 'gamlss' which supports truncated distributions in Generalized Additive Models for Location Scale and Shape.
-        The main function gen.trun() generates truncated versions of an existing gamlss family distribution.
+        The main function gen.trun() generates a truncated version of an existing gamlss family distribution.
 License: GPL-2 | GPL-3
 URL: https://www.gamlss.com/
 BugReports: https://github.com/gamlss-dev/gamlss.tr/issues
