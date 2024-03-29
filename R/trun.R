@@ -9,7 +9,7 @@
 ## x, bd , mu
 ## while for all the rest is 
 ## x, mu, sigma,...,bd
-## this meens that the order in line 92 has to different from the rest
+## this meens that the order in line  126? has to different from the rest
 ## If a new binomial type distribution is created it has to have the 
 ## binomial in order 
 ################################################################################
@@ -91,12 +91,12 @@ if (varying) assign("PAR_", par, envir=gamlss.environment)
     eval(call("<-",as.name(pfun),dummy), envir=gamlss.environment)# parent.frame(n = 1)
 #-------------------------------------------------------------------------------
 # rename the family 
-   family[[1]] <- paste(paste(fname, name, sep=""))
-   family[[2]] <- paste(type, "truncated",fam$family[[2]])
+    family[[1]] <- paste(paste(fname, name, sep=""))
+    family[[2]] <- paste(type, "truncated",fam$family[[2]])
      fam$family <- family # in fam 
 body(fam1)[[nopar+2]][[2]]$family <- family # and in fam1
 # Global deviance increment  
-                 sGD <- gsub(dorfun, dfun, deparse(body(fam$G.dev.incr)))
+            sGD <- gsub(dorfun, dfun, deparse(body(fam$G.dev.incr)))
 body(fam$G.dev.incr) <- parse(text=sGD)
 body(fam1)[[nopar+2]][[2]]$G.dev.incr <- fam$G.dev.incr
 # get the no of parameters  
@@ -116,7 +116,7 @@ switch(nopar,
     function(y, bd, mu) as.vector(attr(gamlss::numeric.deriv(TEST(y, bd, mu, log=TRUE), "mu", delta=NULL), "gradient")) 
   } else  
   {
-    function(y,mu)    as.vector(attr(gamlss::numeric.deriv(TEST(y, mu, log=TRUE), "mu", delta=NULL), "gradient"))  
+    function(y,mu)   as.vector(attr(gamlss::numeric.deriv(TEST(y, mu, log=TRUE), "mu", delta=NULL), "gradient"))  
   }  
       sMU <- sub("TEST", dfun, body(fam$dldm))
 if (!is.na(delta[1])) 
@@ -126,7 +126,7 @@ body(fam1)[[nopar+2]][[2]]$dldm  <- fam$dldm
 # residuals
          sres <- gsub(porfun, pfun,  deparse(fam$rqres[[1]]))
 if  (fam$type == "Discrete")
-    {
+  {
       if (varying==FALSE)
         {
          sres <-  if (type=="left"|type=="both")  
@@ -138,7 +138,7 @@ if  (fam$type == "Discrete")
   if (type=="left")  sres <- gsub("ymin = 0",  paste("ymin = PAR_+1"),  sres)
   if (type=="both")  sres <- gsub("ymin = 0",  paste("ymin = PAR_+1"),  sres)
         }  
-    }
+  }
          #  sres <- gsub("expression", "",  sres)
       fam$rqres <- parse(text=sres)
 body(fam1)[[nopar+2]][[2]]$rqres <- fam$rqres

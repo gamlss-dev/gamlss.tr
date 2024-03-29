@@ -35,12 +35,23 @@ gen.trun(par = c(0), family = "NO", name = "tr",
 \value{
  Returns  the \code{d}, the \code{p}, the \code{q}, the \code{r} and the fitting functions of a truncated \code{gamlss.family} distribution. 
 }
-\references{ Rigby, R. A. and  Stasinopoulos D. M. (2005). Generalized additive models for location, scale and shape,(with discussion), 
-\emph{Appl. Statist.}, \bold{54}, part 3, pp 507-554.
+\references{ Rigby, R. A., Stasinopoulos, D. M.,  Heller, G. Z.,  and De Bastiani, F. (2019)
+	\emph{Distributions for modeling location, scale, and shape: Using GAMLSS in R}, Chapman and Hall/CRC. \doi{10.1201/9780429298547}
+	An older version can be found in \url{https://www.gamlss.com/}.
 
-Stasinopoulos D. M., Rigby R.A. and Akantziliotou C. (2003) Instructions on how to use the GAMLSS package in R.
-Accompanying documentation in the current GAMLSS  help files, (see also  \url{https://www.gamlss.com/}).}
-\author{Mikis Stasinopoulos \email{mikis.stasinopoulos@gamlss.org} and Bob Rigby}
+Stasinopoulos D. M. Rigby R.A. (2007) Generalized additive models for location scale and shape (GAMLSS) in R.
+\emph{Journal of Statistical Software}, Vol. \bold{23}, Issue 7, Dec 2007, \doi{10.18637/jss.v023.i07}.
+
+Stasinopoulos D. M., Rigby R.A., Heller G., Voudouris V., and De Bastiani F., (2017)
+\emph{Flexible Regression and Smoothing: Using GAMLSS in R},  Chapman and Hall/CRC. \doi{10.1201/b21973}
+
+Stasinopoulos, M. D., Rigby, R. A., and De Bastiani F., (2018) GAMLSS: a distributional regression approach, \emph{Statistical Modelling}, Vol. \bold{18}, pp, 248-273, SAGE Publications Sage India: New Delhi, India.
+
+
+Stasinopoulos, M.D., Kneib, T., Klein, N., Mayr, A. and Heller, G.Z., (2024). \emph{Generalized Additive Models for Location, Scale and Shape: A Distributional Regression Approach, with Applications} (Vol. \bold{56}). Cambridge University Press.
+
+(see also  \url{https://www.gamlss.com/}).}
+\author{Mikis Stasinopoulos \email{d.stasinopoulos@gre.ac.uk} and Bob Rigby}
 
 \seealso{ \code{\link{trun.d}}, \code{\link{trun.p}}, \code{\link{trun.q}}, \code{\link{trun.r}} }
 \examples{
