@@ -44,6 +44,10 @@
 #   }
 #   m1
 #}
+################################################################################
+################################################################################
+################################################################################
+################################################################################
 fitTail <- function(y,
                     family = "WEI3",
                 percentage = 10,
@@ -51,30 +55,29 @@ fitTail <- function(y,
                       type = c("right", "left"),
                     ...)
 {
-  #-----------------
-  #  local function
+#-----------------
+#  local function
   tailFun<- function(y, percentage, howmany, type )
-  {
+{
      ly <- length(y)
 howmany <- if (is.null(howmany)) floor(ly*(percentage/100)) else howmany
       Y <- if (type=="right") tail(y[order(y)], howmany)
     else head(y[order(y)], howmany)
     Y
-  }#----------------
-  #require(gamlss.tr)
-       if (!is.null(howmany)&&howmany<=5) stop("too few observations selected")
-       FAM <- as.gamlss.family(family)
-      type <- match.arg(type)
-  typetrun <- if(type=="right") "left" else "right"
-   famName <- FAM$family[1]
-         Y <- tailFun(y, percentage=percentage, howmany=howmany, type=type )
+}#----------------
+if (!is.null(howmany)&&howmany<=5) stop("too few observations selected")
+     FAM <- as.gamlss.family(family)
+    type <- match.arg(type)
+typetrun <- if(type=="right") "left" else "right"
+  famName <- FAM$family[1]
+        Y <- tailFun(y, percentage=percentage, howmany=howmany, type=type )
               if (length(Y)<=5) stop("too few observations selected")
-        mY <- y[order(y)][(length(y)-length(Y))]
-      mYp1 <- y[order(y)][(length(y)+1-length(Y))]
-        mY <- if (mY!=mYp1) mY  else mY-
-              sum(diff(y[order(y)][((length(y)-length(Y))-5):((length(y)-length(Y))+5)]))/100
-        m1 <- try(gamlssML(Y, family=trun(par=mY, family=famName,  type=typetrun),...))
-  if (any(class(m1)%in%"try-error"))
+       mY <- y[order(y)][(length(y)-length(Y))]
+     mYp1 <- y[order(y)][(length(y)+1-length(Y))]
+       mY <- if (mY!=mYp1) mY  else mY-
+sum(diff(y[order(y)][((length(y)-length(Y))-5):((length(y)-length(Y))+5)]))/100
+       m1 <- try(gamlssML(Y, family=trun(par=mY, family=famName,  type=typetrun),...))
+if (any(class(m1)%in%"try-error"))
   {
     warning("gamlssML() failed using gamlss()")
     m1 <- try(gamlss(Y~1, family=trun(par=c(mY-0.001), family=famName,  type=typetrun), ...))
@@ -86,8 +89,10 @@ howmany <- if (is.null(howmany)) floor(ly*(percentage/100)) else howmany
   }
   m1
 }
-#--------------------------------------------------------------------------------
-#--------------------------------------------------------------------------------
+################################################################################
+################################################################################
+################################################################################
+################################################################################
 # function to sequence of fits to the tail
 fitTailAll <- function(y, 
                   family = "WEI3",            
@@ -101,7 +106,7 @@ fitTailAll <- function(y,
                    trace = 0,
                    ...)
 {
-  #  require(gamlss)
+#  require(gamlss)
    type <- match.arg(type)
      ly <- length(y)
 howmany <- if (is.null(howmany)) floor(ly*(percentage/100)) else howmany  
@@ -110,8 +115,7 @@ howmany <- if (is.null(howmany)) floor(ly*(percentage/100)) else howmany
    rest <- howmany-(npar+start)
       M <- matrix(0, ncol=npar, nrow=rest)
     ind <- 1L
-  #  m0 <- fitTail(y, howmany=howmany,  family=FAM, type = type)
-  for (per in howmany:(npar+start+1L))
+for (per in howmany:(npar+start+1L))
   {
     #  cat(ind, per, "\n")
      m1 <- fitTail(y, howmany=per,  family=FAM, type = type, ...)#, start.from=m0) 
@@ -119,23 +123,27 @@ howmany <- if (is.null(howmany)) floor(ly*(percentage/100)) else howmany
        else
        {
          params <- c(fitted(m1, "mu")[1])
-         if ("sigma"%in%names(FAM$parameters))   params <- c(params,fitted(m1, "sigma")[1])    
-         if (  "nu"%in%names(FAM$parameters))    params <- c(params,fitted(m1, "nu")[1])
-         if (  "tau"%in%names(FAM$parameters))   params <- c(params,fitted(m1, "tau")[1]) 
+  if ("sigma"%in%names(FAM$parameters))   
+    params <- c(params,fitted(m1, "sigma")[1])    
+  if ("nu"%in%names(FAM$parameters))    
+    params <- c(params,fitted(m1, "nu")[1])
+  if (  "tau"%in%names(FAM$parameters))   
+    params <- c(params,fitted(m1, "tau")[1]) 
        }
 M[ind,] <- params
     ind <- ind+1L
-  if (trace==1) cat(ind, "..") else
-  if (trace==2)  cat(ind, params, "..", "\n")
-   # 
+if (trace==1) cat(ind, "..") else
+if (trace==2)  cat(ind, params, "..", "\n")
   } 
-  colnames(M) <-names(FAM$parameters)
-  rownames(M) <- as.character(howmany:(npar+start+1))
-  #for (i in 1:dim(M)[2])  M[,i]<- rev(M[,i])
-  T<- ts(M, start=(npar+start+1), end=howmany, frequency=1)
-  invisible(T)
+colnames(M) <-names(FAM$parameters)
+rownames(M) <- as.character(howmany:(npar+start+1))
+          T <- ts(M, start=(npar+start+1), end=howmany, frequency=1)
+invisible(T)
 }
-
+################################################################################
+################################################################################
+################################################################################
+################################################################################
 #--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
 # run those two section if you want the paraeters for different proportion
