@@ -1,3 +1,7 @@
+################################################################################
+################################################################################
+################################################################################
+################################################################################
 ## last change to allow binomial distribution fitting 
 ## 28-6-18
 ## NOTE the for one parameter binomial type distribution the order 
@@ -6,28 +10,40 @@
 ## while for all the rest is 
 ## x, mu, sigma,...,bd
 ## this meens that the order in line 92 has to different from the rest
-## If a new binimial type distribution is created it has to have the binomial 
-## in order 
-##------------------------------------------------------------------
-## This function creates a truncated  gamlss.family object which can 
+## If a new binomial type distribution is created it has to have the 
+## binomial in order 
+################################################################################
+################################################################################
+################################################################################
+################################################################################
+## This function creates a truncated gamlss.family object which can 
 ##  be used for
 ## fitting a GAMLSS model
 ## to correct the residuals for four parameter distributions
 ## change 30-10-2015 MS
 # to make sure that the function creates a function in which the links 
 # can be modified
-#-------------------------------------------------------------------------------
+################################################################################
+################################################################################
+################################################################################
+################################################################################
 ## A problem arise when we need different link function 
-## the solution at the moment is to as for the different link in the beginning
+## the solution at the moment is to as for the different link in the begining
 ## This hopefully is fixed now 22-2-
-#-------------------------------------------------------------------------------
+################################################################################
+################################################################################
+################################################################################
+################################################################################
 # source('/Users/stasinom/Dropbox/gamlss/library/gamlss.tr/R/trun.d-27-12-12.R')
 # source('/Users/stasinom/Dropbox/gamlss/library/gamlss.tr/R/trun.p-27-12-12.R')
 # source('/Users/stasinom/Dropbox/gamlss/library/gamlss.tr/R/trun.q-27-12-12.R')
 # source('/Users/stasinom/Dropbox/gamlss/library/gamlss.tr/R/trun.r-28-12-12.R')
 # source('/Users/stasinom/Dropbox/gamlss/library/gamlss.tr/R/gen.trun-21-06-13.R')
 # require(gamlss)
-#-------------------------------------------------------------------------------
+################################################################################
+################################################################################
+################################################################################
+################################################################################
 trun <-function ( par = c(0), 
                family = "NO", 
                  type = c("left", "right", "both"),
@@ -91,71 +107,86 @@ body(fam1)[[nopar+2]][[2]]$G.dev.incr <- fam$G.dev.incr
  if (length(delta)!=nopar)  stop("delta should be the same length the parameters in the family ")
 #-------------------------------------------------------------------------------
 # now change the first derivatives
-  switch(nopar,  
-          { 
-          # 1 parameter---------------------------------------------------------
-          # dldm
-      fam$dldm <- if(ifBinomial) function(y, bd, mu) as.vector(attr(gamlss::numeric.deriv(TEST(y, bd, mu, log=TRUE), "mu", delta=NULL), "gradient")) 
-                  else           function(y,mu)    as.vector(attr(gamlss::numeric.deriv(TEST(y, mu, log=TRUE), "mu", delta=NULL), "gradient")) 
-           sMU <- sub("TEST", dfun, body(fam$dldm))
-if (!is.na(delta[1])) sMU <- sub("NULL",  as.character(delta[1]), sMU) 
+switch(nopar,  
+  { 
+# 1 parameter-------------------------------------------------------------------
+# dldm
+  fam$dldm <- if (ifBinomial) 
+  {
+    function(y, bd, mu) as.vector(attr(gamlss::numeric.deriv(TEST(y, bd, mu, log=TRUE), "mu", delta=NULL), "gradient")) 
+  } else  
+  {
+    function(y,mu)    as.vector(attr(gamlss::numeric.deriv(TEST(y, mu, log=TRUE), "mu", delta=NULL), "gradient"))  
+  }  
+      sMU <- sub("TEST", dfun, body(fam$dldm))
+if (!is.na(delta[1])) 
+      sMU <- sub("NULL",  as.character(delta[1]), sMU) 
 body(fam$dldm) <- parse(text=sMU[length(sMU)])
 body(fam1)[[nopar+2]][[2]]$dldm  <- fam$dldm
-          # residuals
+# residuals
          sres <- gsub(porfun, pfun,  deparse(fam$rqres[[1]]))
-         if  (fam$type == "Discrete")
-             {
-               if (varying==FALSE)
-               {
-                  sres <-  if (type=="left"|type=="both")  gsub("ymin = 0",  paste("ymin =",  par[1]+1),  sres) 
+if  (fam$type == "Discrete")
+    {
+      if (varying==FALSE)
+        {
+         sres <-  if (type=="left"|type=="both")  
+           gsub("ymin = 0",  paste("ymin =",  par[1]+1),  sres) 
                   else sres  
-                }
-                else
-                {
-                   if (type=="left")  sres <- gsub("ymin = 0",  paste("ymin = PAR_+1"),  sres)
-                   if (type=="both")  sres <- gsub("ymin = 0",  paste("ymin = PAR_+1"),  sres)
-                }  
-               }
+        }
+          else
+        {
+  if (type=="left")  sres <- gsub("ymin = 0",  paste("ymin = PAR_+1"),  sres)
+  if (type=="both")  sres <- gsub("ymin = 0",  paste("ymin = PAR_+1"),  sres)
+        }  
+    }
          #  sres <- gsub("expression", "",  sres)
       fam$rqres <- parse(text=sres)
 body(fam1)[[nopar+2]][[2]]$rqres <- fam$rqres
-
-          },
-          {
-            # 2 parameters -------------------------------------------------------  
+  },
+  {
+# 2 parameters -------------------------------------------------------  
       # dldm and dldd
-      fam$dldm <- if(ifBinomial) function(y,mu,sigma,bd) as.vector(attr(gamlss::numeric.deriv(TEST(y, mu, sigma, bd, log=TRUE), "mu", delta=NULL), "gradient")) 
-                            else function(y,mu,sigma)    as.vector(attr(gamlss::numeric.deriv(TEST(y, mu, sigma, log=TRUE),     "mu", delta=NULL), "gradient"))
-      
-      fam$dldd <- if(ifBinomial) function(y,mu,sigma, bd) as.vector(attr(gamlss::numeric.deriv(TEST(y,mu, sigma, bd, log=TRUE), "sigma", delta=NULL), "gradient"))
-                            else function(y,mu,sigma) as.vector(attr(gamlss::numeric.deriv(TEST(y, mu, sigma, log=TRUE), "sigma", delta=NULL), "gradient"))
-      # mu
-            sMU <- sub("TEST", dfun, body(fam$dldm))
-      if (!is.na(delta[1])) sMU <- sub("NULL",  as.character(delta[1]), sMU) 
-body(fam$dldm) <- parse(text=sMU[length(sMU)])
-body(fam1)[[nopar+2]][[2]]$dldm  <- fam$dldm
-      # sigma   
+      fam$dldm <- if(ifBinomial)
+      {
+    function(y,mu,sigma,bd) as.vector(attr(gamlss::numeric.deriv(TEST(y, mu, sigma, bd, log=TRUE), "mu", delta=NULL), "gradient"))  
+      } else
+      {
+    function(y,mu,sigma)    as.vector(attr(gamlss::numeric.deriv(TEST(y, mu, sigma, log=TRUE),     "mu", delta=NULL), "gradient"))
+      }  
+      fam$dldd <- if(ifBinomial) 
+      {
+        function(y,mu,sigma, bd) as.vector(attr(gamlss::numeric.deriv(TEST(y,mu, sigma, bd, log=TRUE), "sigma", delta=NULL), "gradient"))
+      } else 
+      {
+        function(y,mu,sigma) as.vector(attr(gamlss::numeric.deriv(TEST(y, mu, sigma, log=TRUE), "sigma", delta=NULL), "gradient"))
+      }  # mu
+       sMU <- sub("TEST", dfun, body(fam$dldm))
+      if (!is.na(delta[1])) 
+        sMU <- sub("NULL",  as.character(delta[1]), sMU)  
+       body(fam$dldm) <- parse(text=sMU[length(sMU)])
+       body(fam1)[[nopar+2]][[2]]$dldm  <- fam$dldm
+       # sigma   
         sSIGMA <- sub("TEST", dfun, body(fam$dldd))
       if (!is.na(delta[2])) sSIGMA <- sub("NULL",  as.character(delta[2]), sSIGMA)
 body(fam$dldd) <- parse(text=sSIGMA[length(sSIGMA)]) 
 body(fam1)[[nopar+2]][[2]]$dldd  <- fam$dldd
-            # residuals
-            sres <- gsub(porfun, pfun,  deparse(fam$rqres[[1]]))
-            if  (fam$type == "Discrete")
-            {
-              if (varying==FALSE)
-              {
+# residuals
+      sres <- gsub(porfun, pfun,  deparse(fam$rqres[[1]]))
+    if  (fam$type == "Discrete")
+      {
+      if (varying==FALSE)
+        {
                 sres <-  if (type=="left"|type=="both")  gsub("ymin = 0",  paste("ymin =",par[1]+1),  sres) 
                 else sres  
-              }
-              else
-              {
-                if (type=="left")  sres <- gsub("ymin = 0",  paste("ymin = PAR_+1"),  sres)
-                if (type=="both")  sres <- gsub("ymin = 0",  paste("ymin = PAR_+1"),  sres)
-              }  
-            }
+        }
+          else
+        {
+    if (type=="left")  sres <- gsub("ymin = 0",  paste("ymin = PAR_+1"),  sres)
+    if (type=="both")  sres <- gsub("ymin = 0",  paste("ymin = PAR_+1"),  sres)
+        }  
+      }
             #sres <- gsub("expression", "",  sres)
-            fam$rqres <- parse(text=sres) 
+       fam$rqres <- parse(text=sres) 
 body(fam1)[[nopar+2]][[2]]$rqres <- fam$rqres
           }, # 3 parameters----------------------------------------------------
           # dldm dldd dldv 
