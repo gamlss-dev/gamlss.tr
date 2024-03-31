@@ -1,11 +1,20 @@
+################################################################################
+################################################################################
+################################################################################
+################################################################################
 # this is to create a truncating distribution with varying truncation 
-# according to  par not finished yet 
+# according to par 
+# TO DO : outside truncation set to zero
+################################################################################
+################################################################################
+################################################################################
+################################################################################ 
 trun.d <-function(par, family = "NO", 
                          type = c("left", "right", "both"), 
                       varying = FALSE, ...)
   {
-     type <- match.arg(type)
-    fname <- family
+     type <- match.arg(type) # the truncation type 
+    fname <- family          # the family      
 if (mode(family) != "character" && mode(family) != "name")
     fname <- as.character(substitute(family))
   distype <- eval(call(family))$type
@@ -13,7 +22,8 @@ if (mode(family) != "character" && mode(family) != "name")
      pfun <- paste("p",fname,sep="")
       pdf <- eval(parse(text=dfun))
       cdf <- eval(parse(text=pfun))  
-if (!varying)
+      
+if (!varying) ### not varying ###################################################
 {
 if (type=="both" && length(par)!= 2)  
   stop(paste("the length of par should be 2 \n"))
@@ -23,48 +33,41 @@ if (type!="both" && length(par)!= 1)
 fun <- if (type=="left")  
        function(x, log = FALSE, ...)
     {
-      if (distype=="Discrete" &&  any(x <= par))  
-        stop(paste("x must be greater than ", par, "\n", ""))
-      if (distype!="Discrete" && any(x < par))
-        stop(paste("x must be greater or equal than ", par, "\n", ""))
       dfun <- pdf(x,log = TRUE,...)-log(1-cdf(par,...))
       dfun <- if (log == TRUE) dfun else exp(dfun)
+      dfun <- if (distype=="Discrete") ifelse(x <= par, 0, dfun)
+              else  ifelse(x < par, 0, dfun)
       dfun
     }
     else if (type=="right")
        function(x, log = FALSE, ...)
     {
-      if (distype=="Discrete" &&  any(x >= par))  
-        stop(paste("x must be less than ", par, "\n", ""))
-      if (distype!="Discrete" && any(x > par))
-        stop(paste("x must be less or equal than ", par, "\n", ""))   
       dfun <-  if (distype=="Discrete") pdf(x, log = TRUE,...)-log(cdf(par-1,...))
                else pdf(x, log = TRUE,...)-log(cdf(par,...))
       dfun <- if (log == TRUE) dfun else exp(dfun)
+      dfun <- if (distype=="Discrete") ifelse(x >= par, 0, dfun)
+              else ifelse(x > par, 0, dfun)
       dfun
     } 
   else if (type=="both")    
     function(x, log = FALSE, ...)
     {
-      if (distype=="Discrete" && (any(x <= par[1]) || any(x >= par[2])) )  
-        stop(paste("x must be greater than", par[1], "and less than", par[2], 
-                   "\n", ""))
-      if (distype!="Discrete" && (any(x < par[1]) || any(x > par[2])) )
-        stop(paste("x must be greater than", par[1], "and less or equal to", 
-                   par[2]  , "\n", ""))  
       dfun <- if (distype=="Discrete") pdf(x, log = TRUE,...) - 
                  log(cdf(par[2]-1,...)-cdf(par[1],...)) 
             else pdf(x, log = TRUE,...) - log(cdf(par[2],...)-
                   cdf(par[1],...))      
       dfun <- if (log == TRUE) dfun else exp(dfun)
+      dfun <- if (distype=="Discrete")                      
+              ifelse( (x <= par[1] | x >= par[2]), 0, dfun)
+              else ifelse( (x < par[1] | x > par[2]), 0, dfun)
       dfun
     }   
-}
+}######### end of not varying ##################################################
   else # this is for varying truncation only 
-{
+{#########  varying ############################################################
   if (type=="both" && dim(par)[2]!= 2)  
     stop(paste("the rows of par should be 2 \n"))
-  fun <- if (type=="left")  
+fun <- if (type=="left")          # LEFT 
       function(x, log = FALSE, ...)
       {
         if (length(x)!=length(par)) 
@@ -77,7 +80,7 @@ fun <- if (type=="left")
         dfun <- if (log == TRUE) dfun else exp(dfun)
         dfun
       }
-    else if (type=="right")
+      else if (type=="right")       # RIGHT
       function(x, log = FALSE, ...)
       {
         if (length(x)!=length(par)) 
@@ -91,7 +94,7 @@ fun <- if (type=="left")
         dfun <- if (log == TRUE) dfun else exp(dfun)
         dfun
       } 
-    else if (type=="both")    
+    else if (type=="both")         # BOTH
       function(x, log = FALSE, ...)
       {
         if (dim(par)[1]!= length(x))  
@@ -110,6 +113,6 @@ fun <- if (type=="left")
         dfun <- if (log == TRUE) dfun else exp(dfun)
         dfun
       }  
-}
+}####### end varying ###########################################################
 fun    
 }
