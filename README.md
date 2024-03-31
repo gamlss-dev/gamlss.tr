@@ -6,3 +6,4 @@ The main function `gen.trun()` generates truncated version of an existing `gamls
 **CRAN package:** <https://CRAN.R-project.org/package=gamlss.tr>  
 **GitHub repository:** <https://github.com/gamlss-dev/gamlss.tr/>  
 **Project website:** <https://www.gamlss.com/>
+
