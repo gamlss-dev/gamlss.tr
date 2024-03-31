@@ -107,7 +107,7 @@ fun <- if (type=="left")          # LEFT
           stop(paste("x must be between the lower and uppper of the par argument",
                      "\n", "")) 
         dfun <-   if (distype=="Discrete") pdf(x, log = TRUE,...) - 
-          log(cdf(par[,2]-1,...)-cdf(par[,1],...)) 
+        log(cdf(par[,2]-1,...)-cdf(par[,1],...)) 
                   else pdf(x, log = TRUE,...) - log(cdf(par[,2],...)-
                         cdf(par[,1],...))      
         dfun <- if (log == TRUE) dfun else exp(dfun)

@@ -29,7 +29,7 @@
 ################################################################################
 ## A problem arise when we need different link function 
 ## the solution at the moment is to as for the different link in the begining
-## This hopefully is fixed now 22-2-
+## This hopefully is fixed now
 ################################################################################
 ################################################################################
 ################################################################################
@@ -47,51 +47,54 @@
 trun <-function ( par = c(0), 
                family = "NO", 
                  type = c("left", "right", "both"),
-                 name = "tr", 
+                 extra.name = "tr", 
                 local = TRUE,
                 delta = NULL, 
               varying = FALSE,
                 ...)
 {
 #-------------------------------------------------------------------------------
-     TEST <- "TEST" # dummy name
-     type <- match.arg(type)
-    fname <- if (is.name(family)) as.character(family)
+        TEST <- "TEST"                      # dummy name for late use
+        type <- match.arg(type)             # type of truncation
+## family name         
+       fname <- if (is.name(family)) as.character(family)
              else if (is.character(family)) family
              else if (is.call(family)) as.character(family[[1]])
              else if (is.function(family)) deparse(substitute(family))
              else if (is(family, "gamlss.family"))  family$family[1]
              else stop("the family must be a character or a gamlss.family name")
   ifBinomial <- fname%in%gamlss::.gamlss.bi.list
-        fam1 <- eval(parse(text=fname)) # the family to output
-         fam <- as.gamlss.family(family) # this is created so I can get things
-      family <- c("None", "None")  
-      dorfun <- paste("d",fname,sep="")
-      porfun <- paste("p",fname,sep="")
-        dfun <- paste(paste("d",fname,sep=""), name, sep="")
-        pfun <- paste(paste("p",fname,sep=""), name, sep="")
-       nopar <- fam$nopar # or fam1$nopar
+        fam1 <- eval(parse(text=fname))  # which family to output
+         fam <- as.gamlss.family(family) # this is creating family 
+      family <- c("None", "None")        # for names
+      dorfun <- paste("d",fname,sep="")  # the pdf
+      porfun <- paste("p",fname,sep="")  # the cdf
+        dfun <- paste(paste("d",fname,sep=""), extra.name, sep="") # 
+        pfun <- paste(paste("p",fname,sep=""), extra.name, sep="") #
+       nopar <- fam$nopar # or fam1$nopar # number of parameters
 #------------------------------------------------------------------------------
-if (local)
+if (local) # if the function is used during the fitting
  {
 #--trying to get gamlss sys.frame--  
      rexpr<-regexpr("gamlss",sys.calls())
-for (i in 1:length(rexpr)){ 
+for (i in 1:length(rexpr))
+  { 
     position <- i 
-    if (rexpr[i]==1) break}
+    if (rexpr[i]==1) break
+  }
 gamlss.environment <- sys.frame(position)      
  } else gamlss.environment <- sys.frame(0)
-
-if (varying) assign("PAR_", par, envir=gamlss.environment)
+if (varying) assign("PAR_", par, envir=gamlss.environment) 
 #   generate d within gamlss
     eval(dummy <- trun.d(par, family = fname, type = type, varying = varying, ...))
-    eval(call("<-",as.name(dfun),dummy), envir=gamlss.environment)# parent.frame(n = 1)
+    eval(call("<-",as.name(dfun),dummy), envir=gamlss.environment)
+    # parent.frame(n = 1)
 # generate p within gamlss
     eval(dummy <- trun.p(par, family = fname, type = type, varying = varying, ...))
     eval(call("<-",as.name(pfun),dummy), envir=gamlss.environment)# parent.frame(n = 1)
 #-------------------------------------------------------------------------------
 # rename the family 
-    family[[1]] <- paste(paste(fname, name, sep=""))
+    family[[1]] <- paste(paste(fname, extra.name, sep=""))
     family[[2]] <- paste(type, "truncated",fam$family[[2]])
      fam$family <- family # in fam 
 body(fam1)[[nopar+2]][[2]]$family <- family # and in fam1

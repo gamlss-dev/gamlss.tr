@@ -8,15 +8,15 @@ a parameter vector,  of the type c(left.value, right.value), and  generates a \c
  a truncated distribution.    
 }
 \usage{
-trun(par = c(0), family = "NO",  type = c("left", "right", "both"), name = "tr", 
-        local = TRUE, delta=NULL, varying = FALSE, ...)
+trun(par = c(0), family = "NO",  type = c("left", "right", "both"), 
+       extra.name = "tr", local = TRUE, delta=NULL, varying = FALSE, ...)
 }
 
 \arguments{
   \item{par}{ a vector with one (for \code{"left"} or \code{"right"} truncation) or two elements for \code{"both"}. When the argument \code{varying = TRUE} then \code{par} can be a vector or a matrix with two columns respectively.}
   \item{family}{an existing \code{gamlss.family} distribution}
   \item{type}{what type of truncation is required, \code{left}, \code{right} or \code{both}. If \code{both} the \code{par} should be a vector of length two. (the default is left truncation)}
-  \item{name}{a character string to be added to name of the created object i.e. with \code{family=TF} and \code{name=trZero} the \code{gamlss.family} object will be called \code{TFtrZero}}
+  \item{extra.name}{a character string to be added to name of the created object i.e. with \code{family=TF} and \code{ext.name=trZero} the \code{gamlss.family} object will be called \code{TFtrZero}}
   \item{local}{if TRUE the function will try to find the environment of \code{gamlss} to generate the \code{d} and \code{p} functions required for the fitting, if FALSE the functions will be generated in the global environment}
   \item{delta}{the delta increment used in the numerical derivatives} 
    \item{varying}{whether the truncation  varies for diferent observations. This can be usefull in regression analysis. If \code{varying = TRUE} then \code{par} should be an n-length vector for \code{type} equal \code{"left"} and \code{"right"} and an n by 2 matrix for \code{type="both"}}

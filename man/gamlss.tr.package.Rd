@@ -44,7 +44,7 @@ Stasinopoulos, M.D., Kneib, T., Klein, N., Mayr, A. and Heller, G.Z., (2024). \e
 
 \examples{
 # generating a t-distribution from 0 to 100  	
-gen.trun(par=c(0,100),family="TF", name="0to100", type="both")
+gen.trun(par=c(0,100),family="TF", extra.name="0to100", type="both")
 op<-par(mfrow=c(2,2))
 plot(function(x) dTF0to100(x, mu=80 ,sigma=20, nu=5), 0, 100, ylab="pdf")
 plot(function(x) pTF0to100(x, mu=80 ,sigma=20, nu=5), 0, 100, ylab="cdf")
