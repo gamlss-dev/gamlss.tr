@@ -18,12 +18,12 @@ trun(par = c(0), family = "NO",  type = c("left", "right", "both"),
   \item{type}{what type of truncation is required, \code{left}, \code{right} or \code{both}. If \code{both} the \code{par} should be a vector of length two. (the default is left truncation)}
   \item{extra.name}{a character string to be added to name of the created object i.e. with \code{family=TF} and \code{ext.name=trZero} the \code{gamlss.family} object will be called \code{TFtrZero}}
   \item{local}{if TRUE the function will try to find the environment of \code{gamlss} to generate the \code{d} and \code{p} functions required for the fitting, if FALSE the functions will be generated in the global environment}
-  \item{delta}{the delta increment used in the numerical derivatives} 
+  \item{delta}{the default delta increment used in the numerical derivatives see notes below} 
    \item{varying}{whether the truncation  varies for diferent observations. This can be usefull in regression analysis. If \code{varying = TRUE} then \code{par} should be an n-length vector for \code{type} equal \code{"left"} and \code{"right"} and an n by 2 matrix for \code{type="both"}}
   \item{\dots}{for extra arguments }
 }
 \details{
-This function is created to help the user to fit a truncated form of existing \code{gamlss} distribution.
+This function is created to help the user to fit a truncated form of an existing \code{gamlss} distribution.
 It does this by taking an existing \code{gamlss.family} and changing some of the components of the distribution to help the fitting process. 
 It particular it i) creates a pdf (\code{d}) and a cdf (\code{p}) function within \code{gamlss}, 
 ii) changes  the global deviance function \code{G.dev.incr}, the first derivative functions (see note below) and the quantile residual function.   
@@ -50,12 +50,7 @@ Stasinopoulos, M.D., Kneib, T., Klein, N., Mayr, A. and Heller, G.Z., (2024). \e
 
 \author{Mikis Stasinopoulos \email{d.stasinopoulos@gre.ac.uk} and Bob Rigby}
 
-\note{This function is experimental and could be changed. The function \code{trun}  changes 
-      the first derivatives of the original gamlss family \code{d} function to numerical derivatives 
-      for the new truncated \code{d} function. The default increment \code{delta},
-      for this numerical derivatives function, is \code{eps * pmax(abs(x), 1)} where 
-      \code{eps<-sqrt(.Machine$double.eps)}.  The default \code{delta} could be inappropriate 
-      for specific applications and can be overwritten by using the argument \code{delta}.}
+\note{This function is experimental and could be changed. The function \code{trun}  changes the first derivatives of the original gamlss family \code{d} function to  numerical derivatives for the new truncated \code{d} function. The default increment \code{delta}, for this numerical derivatives function, is \code{eps * pmax(abs(x), 1)} where  \code{eps<-sqrt(.Machine$double.eps)}.  The default \code{delta} could be inappropriate for specific applications and can be overwritten by using the argument \code{delta}.}
 \seealso{\code{\link{trun.d}}, \code{\link{trun.p}}, \code{\link{trun.q}}, \code{\link{trun.r}},  \code{\link{gen.trun}} }
 \examples{
 # generate a left truncated zero t family
