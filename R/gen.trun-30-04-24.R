@@ -37,6 +37,6 @@ if (print)
    cat("A truncated family of distributions from",  fname, "has been generated \n", 
        "and saved under the names: ", "\n",paste(alldislist,sep=","),"\n")#
    cat("The type of truncation is", type, "\n",
-       "and the truncation parameter is", par, " \n") 
+       "and the truncation parameter is", if(varying==FALSE) par else "varying", " \n") 
 }  
  }

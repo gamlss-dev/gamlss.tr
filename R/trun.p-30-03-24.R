@@ -18,41 +18,74 @@ if (!varying)
 if (type=="both" && length(par)!= 2)  
   stop(paste("the length of par should be 2 \n"))
 if (type!="both" && length(par)!= 1)  
-  stop(paste("the length of par should be 1 \n"))  
-fun <- if (type=="left")  
+  stop(paste("the length of par should be 1 \n")) 
+#--
+fun <- if (type=="left")  ############# LEFT ###################################  
       function(q, lower.tail = TRUE, log.p = FALSE, ...)
      {
       cof <- (cdf(q,...)-cdf(par,...))/(1-cdf(par,...))
       cof <- if(lower.tail == TRUE) cof  else 1-cof   
-      cof <- if(log.p==FALSE)  cof else  log(cof) 
-      cof <- if (distype=="Discrete") ifelse(q <= par, 0, cof)
-      else  ifelse(q < par, 0, cof)
+      if(log.p==TRUE)  
+      {
+        cof <-  log(cof) 
+        cof <- if (distype=="Discrete") 
+          ifelse(q <= par, NA, cof)
+        else  ifelse(q < par, NA, cof)
+      } else  
+      {
+        cof <-  cof 
+        cof <- if (distype=="Discrete") 
+                    ifelse(q <= par, 0, cof)
+              else  ifelse(q < par, 0, cof)
+      }  
       cof
       }
-     else if (type=="right")
+     else if (type=="right") ############# Right ###############################
        function(q, lower.tail = TRUE, log.p = FALSE, ...)
       {
       cof <- if (distype=="Discrete") cdf(q,...)/cdf(par-1,...)
-             else cdf(q,...)/cdf(par,...) # added Friday, February 26, 2010 
+                  else cdf(q,...)/cdf(par,...) 
       cof <- if(lower.tail == TRUE) cof  else 1-cof   
-      cof <- if(log.p==FALSE)  cof else  log(cof) 
-      cof <- if (distype=="Discrete") ifelse(q >= par, 0, cof)
-               else ifelse(q > par, 0, cof)
+      if(log.p==TRUE) 
+      {
+        cof <- log(cof)
+        cof <- if (distype=="Discrete") 
+             ifelse(q >= par, NA, cof)
+        else ifelse(q > par, NA, cof) 
+        
+      } else  
+      {
+        cof <-  cof 
+        cof <- if (distype=="Discrete") 
+                  ifelse(q >= par, 0, cof)
+             else ifelse(q > par, 0, cof)
+      }
       cof
       }
-     else if (type=="both")    
+     else if (type=="both")############# BOTH ##################################  
       function(q, lower.tail = TRUE, log.p = FALSE, ...)
       {
      cof <- if (distype=="Discrete") 
-       (cdf(q,...)-cdf(par[1],...))/(cdf(par[2]-1,...)-cdf(par[1],...)) 
-          else (cdf(q,...)-cdf(par[1],...))/(cdf(par[2],...)-cdf(par[1],...))   
-     # added Friday, February 26, 2010     
-      cof <- if(lower.tail == TRUE) cof  else 1-cof   
-      cof <- if(log.p==FALSE)  cof else  log(cof) 
+      (cdf(q,...)-cdf(par[1],...))/(cdf(par[2]-1,...)-cdf(par[1],...)) 
+          else 
+      (cdf(q,...)-cdf(par[1],...))/(cdf(par[2],...)-cdf(par[1],...))   
+# added Friday, February 26, 2010     
+      cof <- if(lower.tail == TRUE) cof  else 1-cof  
+      if(log.p==TRUE)
+      {
+      cof <- log(cof)
       cof <- if (distype=="Discrete")                      
-                ifelse( (q <= par[1] | q >= par[2]), 0, cof)
-              else 
-                ifelse( (q < par[1] | q > par[2]), 0, cof)
+        ifelse( (q <= par[1] | q >= par[2]), NA, cof)
+      else 
+       ifelse( (q < par[1] | q > par[2]), NA, cof)
+      } else 
+      {
+        cof <- cof
+        cof <- if (distype=="Discrete")                      
+          ifelse( (q <= par[1] | q >= par[2]), 0, cof)
+        else 
+          ifelse( (q < par[1] | q > par[2]), 0, cof)
+      }
       cof
       }
 }################ end for not varying ##########################################

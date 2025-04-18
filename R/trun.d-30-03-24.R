@@ -22,7 +22,6 @@ if (mode(family) != "character" && mode(family) != "name")
      pfun <- paste("p",fname,sep="")
       pdf <- eval(parse(text=dfun))
       cdf <- eval(parse(text=pfun))  
-      
 if (!varying) ### not varying ##################################################
 {
 if (type=="both" && length(par)!= 2)  
@@ -156,15 +155,15 @@ warning(paste("The length of x must be equal to the length of varying parameters
         {
           dfun <- dfun
           dfun <- if (distype=="Discrete")                      
-                      ifelse( (x <= par[1] | x >= par[2]), NA, dfun)
-                 else ifelse( (x < par[1] | x > par[2]), NA, dfun)
+                      ifelse( (x <= par[,1] | x >= par[,2]), NA, dfun)
+                 else ifelse( (x < par[,1] | x > par[,2]), NA, dfun)
         }
         else
         {
          dfun <- exp(dfun) 
          dfun <- if (distype=="Discrete")                      
-                      ifelse( (x <= par[1] | x >= par[2]), 0, dfun)
-                 else ifelse( (x < par[1] | x > par[2]), 0, dfun)
+                      ifelse( (x <= par[,1] | x >= par[,2]), 0, dfun)
+                 else ifelse( (x < par[,1] | x > par[,2]), 0, dfun)
         }  
           
         dfun
